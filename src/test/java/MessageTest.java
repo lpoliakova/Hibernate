@@ -17,6 +17,7 @@ public class MessageTest {
         EntityManager em = emf.createEntityManager();
 
         Message message = new Message();
+        message.setUserId(1L);
         message.setText("Concur the world");
 
         try {
@@ -46,6 +47,7 @@ public class MessageTest {
         }
 
         assertEquals(messages.size(), 1);
+        assertEquals(messages.get(0).getUserId(), message.getUserId());
         assertEquals(messages.get(0).getText(), message.getText());
     }
 }

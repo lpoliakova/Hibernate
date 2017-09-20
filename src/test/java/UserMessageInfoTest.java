@@ -1,50 +1,37 @@
+import PersistentClasses.Message;
 import PersistentClasses.User;
+import PersistentClasses.UserMessageInfo;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.EntityManager;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by oradchykova on 8/21/17.
- */
-public class UserTest {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("myTest");
-
+public class UserMessageInfoTest {
     @Test
-    public void testUser(){
+    public void persistenceTest(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("myTest");
         EntityManager em = emf.createEntityManager();
 
         String login = "sashen'ka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
         User userSasha = new User(login, firstName, lastName);
-        User userLena = new User("lena", "Lena", "Poliakova");
+        Long sashaId;
+
+        Message message = new Message();
+        message.setText("Concur the world");
 
         try {
             em.getTransaction().begin();
 
             em.persist(userSasha);
-            em.persist(userLena);
-
-            System.out.println(userSasha.getId());
-            System.out.println(userLena.getId());
-
-            em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-        }
-
-        User foundUser;
-
-        try {
-            em.getTransaction().begin();
-
-            foundUser = em.find(User.class, userSasha.getId());
+            sashaId = userSasha.getId();
+            message.setUserId(sashaId);
+            em.persist(message);
 
             em.getTransaction().commit();
         }
@@ -53,8 +40,21 @@ public class UserTest {
                 em.getTransaction().rollback();
         }
 
-        assertEquals(login, foundUser.getLogin());
-        assertEquals(firstName, foundUser.getFirstName());
-        assertEquals(lastName, foundUser.getLastName());
+        UserMessageInfo userMessageInfo;
+
+        try {
+            em.getTransaction().begin();
+
+            userMessageInfo = em.find(UserMessageInfo.class, sashaId);
+
+            em.getTransaction().commit();
+        }
+        finally {
+            if (em.getTransaction().isActive())
+                em.getTransaction().rollback();
+        }
+
+        assertEquals(login, userMessageInfo.getUserLogin());
+        assertEquals(new Integer(1), userMessageInfo.getMessageCount());
     }
 }

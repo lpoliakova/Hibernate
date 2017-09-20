@@ -1,7 +1,10 @@
 package PersistentClasses;
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -10,8 +13,8 @@ import javax.persistence.Id;
 @Entity
 public class User {
     @Id
-    @GeneratedValue(generator = "USER_ID_GENERATOR")
-    int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
 
     String login;
     String firstName;
@@ -25,7 +28,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
