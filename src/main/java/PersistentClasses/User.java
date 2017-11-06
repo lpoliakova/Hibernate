@@ -1,11 +1,6 @@
 package PersistentClasses;
 
-import org.hibernate.annotations.GeneratorType;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by oradchykova on 8/21/17.
@@ -14,11 +9,11 @@ import javax.persistence.Id;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    String login;
-    String firstName;
-    String lastName;
+    private String login;
+    private String firstName;
+    private String lastName;
 
     protected User(){}
 

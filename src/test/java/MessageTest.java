@@ -49,5 +49,7 @@ public class MessageTest {
         assertEquals(messages.size(), 1);
         assertEquals(messages.get(0).getUserId(), message.getUserId());
         assertEquals(messages.get(0).getText(), message.getText());
+
+        System.out.println(messages.get(0).getCreationTimestamp());
     }
 }
