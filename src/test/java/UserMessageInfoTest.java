@@ -1,12 +1,9 @@
-import PersistentClasses.Message;
-import PersistentClasses.User;
-import PersistentClasses.UserMessageInfo;
+import PersistentClasses.*;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,10 +13,10 @@ public class UserMessageInfoTest {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("myTest");
         EntityManager em = emf.createEntityManager();
 
-        String login = "sashen'ka";
+        String login = "sashenka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
-        User userSasha = new User(login, firstName, lastName);
+        User userSasha = new User(new Credentials(login, new UserName(firstName, lastName)));
         Long sashaId;
 
         Message message = new Message();

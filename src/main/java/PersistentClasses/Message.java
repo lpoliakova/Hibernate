@@ -14,15 +14,15 @@ public class Message {
     private Long id;
 
     @Column(insertable = false)
-    @org.hibernate.annotations.ColumnDefault("1000")
+    @org.hibernate.annotations.ColumnDefault("1")
     @org.hibernate.annotations.Generated(
             org.hibernate.annotations.GenerationTime.INSERT
     )
     private Long userId;
     private String text;
 
-    @Temporal(TemporalType.DATE)
-    @Column(insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false)
     @org.hibernate.annotations.CreationTimestamp
     private Date creationTimestamp;
 

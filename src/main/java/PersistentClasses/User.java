@@ -11,43 +11,40 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String login;
-    private String firstName;
-    private String lastName;
+    private Credentials credentials;
+
+    @Column(name = "PRIORITY")
+    @org.hibernate.annotations.ColumnTransformer(
+            forColumn = "PRIORITY",
+            read = "PRIORITY - 1",
+            write = "? + 1"
+    )
+    private int priority;
 
     protected User(){}
 
-    public User(String login, String firstName, String lastName){
-        this.login = login;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(Credentials credentials){
+        this.credentials = credentials;
+        priority = 10;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getLogin() {
-        return login;
+    public Credentials getCredentials() {
+        return credentials;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public int getPriority() {
+        return priority;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 }

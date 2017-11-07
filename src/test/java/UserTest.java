@@ -1,4 +1,6 @@
 import PersistentClasses.User;
+import PersistentClasses.Credentials;
+import PersistentClasses.UserName;
 import org.junit.Test;
 
 import javax.persistence.EntityManagerFactory;
@@ -20,8 +22,9 @@ public class UserTest {
         String login = "sashen'ka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
-        User userSasha = new User(login, firstName, lastName);
-        User userLena = new User("lena", "Lena", "Poliakova");
+        Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
+        User userSasha = new User(sashasCredentials);
+        User userLena = new User(new Credentials("lena", new UserName("Lena", "Poliakova")));
 
         try {
             em.getTransaction().begin();
@@ -53,8 +56,8 @@ public class UserTest {
                 em.getTransaction().rollback();
         }
 
-        assertEquals(login, foundUser.getLogin());
-        assertEquals(firstName, foundUser.getFirstName());
-        assertEquals(lastName, foundUser.getLastName());
+        assertEquals(login, foundUser.getCredentials().getLogin());
+        assertEquals(firstName, foundUser.getCredentials().getName().getFirstName());
+        assertEquals(lastName, foundUser.getCredentials().getName().getLastName());
     }
 }
