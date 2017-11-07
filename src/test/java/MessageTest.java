@@ -19,6 +19,7 @@ public class MessageTest {
         Message message = new Message();
         message.setUserId(1L);
         message.setText("Concur the world");
+        message.setScope(Message.MessageScope.PUBLIC);
 
         try {
             em.getTransaction().begin();
@@ -46,9 +47,10 @@ public class MessageTest {
                 em.getTransaction().rollback();
         }
 
-        assertEquals(messages.size(), 1);
-        assertEquals(messages.get(0).getUserId(), message.getUserId());
-        assertEquals(messages.get(0).getText(), message.getText());
+        assertEquals(1, messages.size());
+        assertEquals(message.getUserId(), messages.get(0).getUserId());
+        assertEquals(message.getText(), messages.get(0).getText());
+        assertEquals(message.getScope(), messages.get(0).getScope());
 
         System.out.println(messages.get(0).getCreationTimestamp());
     }

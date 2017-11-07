@@ -26,6 +26,9 @@ public class Message {
     @org.hibernate.annotations.CreationTimestamp
     private Date creationTimestamp;
 
+    @Enumerated(EnumType.STRING)
+    private MessageScope scope;
+
     public Long getUserId() {
         return userId;
     }
@@ -48,5 +51,18 @@ public class Message {
 
     public void setCreationTimestamp(Date creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
+    }
+
+    public MessageScope getScope() {
+        return scope;
+    }
+
+    public void setScope(MessageScope scope) {
+        this.scope = scope;
+    }
+
+    public enum MessageScope {
+        PRIVATE,
+        PUBLIC
     }
 }
