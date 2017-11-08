@@ -1,6 +1,4 @@
-import PersistentClasses.User;
-import PersistentClasses.Credentials;
-import PersistentClasses.UserName;
+import PersistentClasses.*;
 import org.junit.Test;
 
 import javax.persistence.EntityManagerFactory;
@@ -22,18 +20,24 @@ public class UserTest {
         String login = "sashen'ka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
+        int priority = 5;
         Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
-        User userSasha = new User(sashasCredentials);
+        User userSasha = new SecuredUser(sashasCredentials, "sasha");
         User userLena = new User(new Credentials("lena", new UserName("Lena", "Poliakova")));
+        User userLera = new UserWithEmail(new Credentials("lera", new UserName("Lera", "Poliakova")), "lera@ex.com");
 
         try {
             em.getTransaction().begin();
 
             em.persist(userSasha);
             em.persist(userLena);
+            em.persist(userLera);
 
             System.out.println(userSasha.getId());
             System.out.println(userLena.getId());
+            System.out.println(userLera.getId());
+
+            userSasha.setPriority(priority);
 
             em.getTransaction().commit();
         } finally {
@@ -56,8 +60,11 @@ public class UserTest {
                 em.getTransaction().rollback();
         }
 
+        assertEquals(SecuredUser.class, foundUser.getClass());
+
         assertEquals(login, foundUser.getCredentials().getLogin());
         assertEquals(firstName, foundUser.getCredentials().getName().getFirstName());
         assertEquals(lastName, foundUser.getCredentials().getName().getLastName());
+        assertEquals(priority, foundUser.getPriority());
     }
 }

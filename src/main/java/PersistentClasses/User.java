@@ -6,6 +6,9 @@ import javax.persistence.*;
  * Created by oradchykova on 8/21/17.
  */
 @Entity
+
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "USER_TYPE")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
