@@ -1,5 +1,7 @@
-import PersistentClasses.*;
+import entities.*;
 import org.junit.Test;
+import values.Credentials;
+import values.UserName;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

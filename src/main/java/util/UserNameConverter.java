@@ -1,6 +1,6 @@
-package Util;
+package util;
 
-import PersistentClasses.UserName;
+import values.UserName;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

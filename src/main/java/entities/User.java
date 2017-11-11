@@ -1,4 +1,6 @@
-package PersistentClasses;
+package entities;
+
+import values.Credentials;
 
 import javax.persistence.*;
 
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "USER_TYPE")
 public class User {
     @Id

@@ -1,4 +1,4 @@
-package PersistentClasses;
+package util;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

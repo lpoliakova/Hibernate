@@ -1,13 +1,15 @@
-package PersistentClasses;
+package entities;
 
-import javax.persistence.DiscriminatorValue;
+import values.Credentials;
+
 import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  * Created by oradchykova on 11/8/17.
  */
 @Entity
-@DiscriminatorValue("SU")
+@PrimaryKeyJoinColumn(name = "SECURED_USER")
 public class SecuredUser extends User{
     private String password;
 

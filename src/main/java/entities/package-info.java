@@ -16,4 +16,4 @@
                 )
         }
 )
-package PersistentClasses;
+package entities;

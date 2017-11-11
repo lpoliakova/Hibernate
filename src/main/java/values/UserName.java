@@ -1,4 +1,4 @@
-package PersistentClasses;
+package values;
 
 import java.io.Serializable;
 

@@ -1,4 +1,6 @@
-package PersistentClasses;
+package entities;
+
+import values.Credentials;
 
 import javax.persistence.*;
 
@@ -6,7 +8,7 @@ import javax.persistence.*;
  * Created by oradchykova on 11/8/17.
  */
 @Entity
-@DiscriminatorValue("EU")
+@PrimaryKeyJoinColumn(name = "USER_WITH_EMAIL")
 public class UserWithEmail extends User {
     private String email;
 

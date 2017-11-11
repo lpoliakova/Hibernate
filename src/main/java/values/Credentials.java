@@ -1,7 +1,8 @@
-package PersistentClasses;
+package values;
 
-import Util.UserNameConverter;
+import util.UserNameConverter;
 import com.sun.istack.internal.NotNull;
+import values.UserName;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
