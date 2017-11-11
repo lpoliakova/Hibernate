@@ -26,7 +26,9 @@ public class UserTest {
         Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
         User userSasha = new SecuredUser(sashasCredentials, "sasha");
         User userLena = new User(new Credentials("lena", new UserName("Lena", "Poliakova")));
-        User userLera = new UserWithEmail(new Credentials("lera", new UserName("Lera", "Poliakova")), "lera@ex.com");
+        User userLera = new UserWithEmail(new Credentials("lera", new UserName("Lera", "Poliakova")));
+        ((UserWithEmail)userLera).addEmail("lera@ex.com");
+        ((UserWithEmail)userLera).addEmail("poliakova@ex.com");
 
         try {
             em.getTransaction().begin();

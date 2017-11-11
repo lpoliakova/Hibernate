@@ -3,6 +3,9 @@ package entities;
 import values.Credentials;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Created by oradchykova on 11/8/17.
@@ -10,21 +13,28 @@ import javax.persistence.*;
 @Entity
 @PrimaryKeyJoinColumn(name = "USER_WITH_EMAIL")
 public class UserWithEmail extends User {
-    private String email;
+    @ElementCollection
+    @CollectionTable(name = "EMAILS")
+    @Column(name = "EMAIL")
+    @org.hibernate.annotations.OrderBy(clause = "EMAIL desc")
+    private Set<String> emails = new LinkedHashSet<>();
 
     public UserWithEmail() {
     }
 
-    public UserWithEmail(Credentials credentials, String email) {
+    public UserWithEmail(Credentials credentials) {
         super(credentials);
-        this.email = email;
     }
 
-    public String getEmail() {
-        return email;
+    public Set<String> getEmails() {
+        return Collections.unmodifiableSet(emails);
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void addEmail(String email) {
+        this.emails.add(email);
+    }
+
+    public void removeEmail(String email) {
+        this.emails.remove(email);
     }
 }
