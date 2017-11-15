@@ -1,11 +1,17 @@
 import entities.*;
 import org.junit.Test;
 import values.Credentials;
+import values.Image;
 import values.UserName;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,22 +30,14 @@ public class UserTest {
         String lastName = "Radchykov";
         int priority = 5;
         Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
-        User userSasha = new SecuredUser(sashasCredentials, "sasha");
-        User userLena = new User(new Credentials("lena", new UserName("Lena", "Poliakova")));
-        User userLera = new UserWithEmail(new Credentials("lera", new UserName("Lera", "Poliakova")));
-        ((UserWithEmail)userLera).addEmail("lera@ex.com");
-        ((UserWithEmail)userLera).addEmail("poliakova@ex.com");
+        User userSasha = new User(sashasCredentials);
 
         try {
             em.getTransaction().begin();
 
             em.persist(userSasha);
-            em.persist(userLena);
-            em.persist(userLera);
 
             System.out.println(userSasha.getId());
-            System.out.println(userLena.getId());
-            System.out.println(userLera.getId());
 
             userSasha.setPriority(priority);
 
@@ -50,25 +48,105 @@ public class UserTest {
             }
         }
 
-        User foundUser;
+        User foundUser = em.find(User.class, userSasha.getId());
 
-        try {
-            em.getTransaction().begin();
-
-            foundUser = em.find(User.class, userSasha.getId());
-
-            em.getTransaction().commit();
-        }
-        finally {
-            if (em.getTransaction().isActive())
-                em.getTransaction().rollback();
-        }
-
-        assertEquals(SecuredUser.class, foundUser.getClass());
-
+        assertEquals(User.class, foundUser.getClass());
         assertEquals(login, foundUser.getCredentials().getLogin());
         assertEquals(firstName, foundUser.getCredentials().getName().getFirstName());
         assertEquals(lastName, foundUser.getCredentials().getName().getLastName());
         assertEquals(priority, foundUser.getPriority());
+    }
+
+    @Test
+    public void testSecuredUser(){
+        EntityManager em = emf.createEntityManager();
+
+        String login = "sashen'ka";
+        String firstName = "Oleksandr";
+        String lastName = "Radchykov";
+        String password = "sasha";
+        Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
+        User userSasha = new SecuredUser(sashasCredentials, password);
+
+        try {
+            em.getTransaction().begin();
+
+            em.persist(userSasha);
+
+            em.getTransaction().commit();
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+
+        User foundUser = em.find(User.class, userSasha.getId());
+
+        assertEquals(SecuredUser.class, foundUser.getClass());
+        assertEquals(password, ((SecuredUser)foundUser).getPassword());
+    }
+
+    @Test
+    public void testUserWithEmail(){
+        EntityManager em = emf.createEntityManager();
+
+        String login = "sashen'ka";
+        String firstName = "Oleksandr";
+        String lastName = "Radchykov";
+        Set<String> emails = new HashSet<>();
+        emails.add("sasha@ex.com");
+        emails.add("radchykov@ex.com");
+        Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
+        User userSasha = new UserWithEmail(sashasCredentials);
+        emails.forEach(((UserWithEmail) userSasha)::addEmail);
+
+        try {
+            em.getTransaction().begin();
+
+            em.persist(userSasha);
+
+            em.getTransaction().commit();
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+
+        User foundUser = em.find(User.class, userSasha.getId());
+
+        assertEquals(UserWithEmail.class, foundUser.getClass());
+        assertEquals(emails, ((UserWithEmail)foundUser).getEmails());
+    }
+
+    @Test
+    public void testUserWithPhotos(){
+        EntityManager em = emf.createEntityManager();
+
+        String login = "sashen'ka";
+        String firstName = "Oleksandr";
+        String lastName = "Radchykov";
+        Map<String, Image> photos = new HashMap<>();
+        photos.put("myPass", new Image("photos/passport", ".png", 300, 400));
+        photos.put("Italy Beach", new Image("photos/italy/beach", ".jpg"));
+        Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
+        User userSasha = new UserWithPhotos(sashasCredentials);
+        photos.forEach(((UserWithPhotos) userSasha)::addPhoto);
+
+        try {
+            em.getTransaction().begin();
+
+            em.persist(userSasha);
+
+            em.getTransaction().commit();
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        }
+
+        User foundUser = em.find(User.class, userSasha.getId());
+
+        assertEquals(UserWithPhotos.class, foundUser.getClass());
+        assertEquals(photos, ((UserWithPhotos)foundUser).getPhotos());
     }
 }
