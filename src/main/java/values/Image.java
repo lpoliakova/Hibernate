@@ -11,7 +11,7 @@ public class Image {
     private Integer height;
     private Integer width;
 
-    public Image() {
+    protected Image() {
     }
 
     public Image(String fileName, String extension) {
@@ -29,16 +29,8 @@ public class Image {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     public String getExtension() {
         return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
     }
 
     public Integer getHeight() {

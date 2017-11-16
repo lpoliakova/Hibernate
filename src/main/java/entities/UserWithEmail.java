@@ -19,7 +19,7 @@ public class UserWithEmail extends User {
     @org.hibernate.annotations.OrderBy(clause = "EMAIL desc")
     private Set<String> emails = new LinkedHashSet<>();
 
-    public UserWithEmail() {
+    protected UserWithEmail() {
     }
 
     public UserWithEmail(Credentials credentials) {

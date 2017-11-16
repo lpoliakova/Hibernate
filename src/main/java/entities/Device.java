@@ -23,7 +23,7 @@ public class Device {
     )
     private User user;
 
-    public Device() {
+    protected Device() {
     }
 
     public Device(DeviceType type, String model) {

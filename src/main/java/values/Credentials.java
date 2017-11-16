@@ -21,7 +21,7 @@ public class Credentials {
     @Column(name = "USER_NAME")
     UserName name;
 
-    public Credentials() {
+    protected Credentials() {
 
     }
 

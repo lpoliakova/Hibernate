@@ -13,7 +13,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 public class SecuredUser extends User{
     private String password;
 
-    public SecuredUser() {
+    protected SecuredUser() {
     }
 
     public SecuredUser(Credentials credentials, String password) {

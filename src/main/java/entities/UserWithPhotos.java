@@ -17,7 +17,7 @@ public class UserWithPhotos extends User {
     @MapKeyColumn(name = "PHOTO_NAME")
     private Map<String, Image> photos = new HashMap<>();
 
-    public UserWithPhotos() {
+    protected UserWithPhotos() {
     }
 
     public UserWithPhotos(Credentials credentials) {

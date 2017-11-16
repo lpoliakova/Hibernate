@@ -9,10 +9,6 @@ public class UserName implements Serializable{
     String firstName;
     String lastName;
 
-    public UserName() {
-
-    }
-
     public UserName(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
