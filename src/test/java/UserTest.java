@@ -20,11 +20,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class UserTest {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("myTest");
+    private EntityManager em = emf.createEntityManager();
 
     @Test
     public void testUser(){
-        EntityManager em = emf.createEntityManager();
-
         String login = "sashen'ka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
@@ -59,8 +58,6 @@ public class UserTest {
 
     @Test
     public void testSecuredUser(){
-        EntityManager em = emf.createEntityManager();
-
         String login = "sashen'ka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
@@ -68,17 +65,7 @@ public class UserTest {
         Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
         User userSasha = new SecuredUser(sashasCredentials, password);
 
-        try {
-            em.getTransaction().begin();
-
-            em.persist(userSasha);
-
-            em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-        }
+        persistUser(userSasha);
 
         User foundUser = em.find(User.class, userSasha.getId());
 
@@ -88,8 +75,6 @@ public class UserTest {
 
     @Test
     public void testUserWithEmail(){
-        EntityManager em = emf.createEntityManager();
-
         String login = "sashen'ka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
@@ -100,17 +85,7 @@ public class UserTest {
         User userSasha = new UserWithEmail(sashasCredentials);
         emails.forEach(((UserWithEmail) userSasha)::addEmail);
 
-        try {
-            em.getTransaction().begin();
-
-            em.persist(userSasha);
-
-            em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-        }
+        persistUser(userSasha);
 
         User foundUser = em.find(User.class, userSasha.getId());
 
@@ -120,8 +95,6 @@ public class UserTest {
 
     @Test
     public void testUserWithPhotos(){
-        EntityManager em = emf.createEntityManager();
-
         String login = "sashen'ka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
@@ -132,10 +105,19 @@ public class UserTest {
         User userSasha = new UserWithPhotos(sashasCredentials);
         photos.forEach(((UserWithPhotos) userSasha)::addPhoto);
 
+        persistUser(userSasha);
+
+        User foundUser = em.find(User.class, userSasha.getId());
+
+        assertEquals(UserWithPhotos.class, foundUser.getClass());
+        assertEquals(photos, ((UserWithPhotos)foundUser).getPhotos());
+    }
+
+    private void persistUser(User user) {
         try {
             em.getTransaction().begin();
 
-            em.persist(userSasha);
+            em.persist(user);
 
             em.getTransaction().commit();
         } finally {
@@ -143,10 +125,5 @@ public class UserTest {
                 em.getTransaction().rollback();
             }
         }
-
-        User foundUser = em.find(User.class, userSasha.getId());
-
-        assertEquals(UserWithPhotos.class, foundUser.getClass());
-        assertEquals(photos, ((UserWithPhotos)foundUser).getPhotos());
     }
 }

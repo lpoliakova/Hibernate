@@ -12,6 +12,7 @@
         <class>entities.SecuredUser</class>
         <class>entities.UserWithEmail</class>
         <class>entities.UserWithPhotos</class>
+        <class>entities.Device</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

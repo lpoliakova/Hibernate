@@ -8,7 +8,6 @@ import javax.persistence.*;
  * Created by oradchykova on 8/21/17.
  */
 @Entity
-
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "USER_TYPE")
 public class User {
@@ -17,6 +16,13 @@ public class User {
     private Long id;
 
     private Credentials credentials;
+
+    @OneToOne (
+            fetch = FetchType.LAZY,
+            /*optional = false,*/
+            cascade = CascadeType.PERSIST
+    )
+    private Device device;
 
     @Column(name = "PRIORITY")
     @org.hibernate.annotations.ColumnTransformer(
@@ -43,6 +49,14 @@ public class User {
 
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
     }
 
     public int getPriority() {
