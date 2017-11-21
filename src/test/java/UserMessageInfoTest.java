@@ -20,18 +20,12 @@ public class UserMessageInfoTest {
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
         User userSasha = new User(new Credentials(login, new UserName(firstName, lastName)));
-        Long sashaId;
-
-        Message message = new Message();
-        message.setText("Concur the world");
+        userSasha.writeMessage("Concur the world");
 
         try {
             em.getTransaction().begin();
 
             em.persist(userSasha);
-            sashaId = userSasha.getId();
-            message.setUserId(sashaId);
-            em.persist(message);
 
             em.getTransaction().commit();
         }
@@ -45,7 +39,7 @@ public class UserMessageInfoTest {
         try {
             em.getTransaction().begin();
 
-            userMessageInfo = em.find(UserMessageInfo.class, sashaId);
+            userMessageInfo = em.find(UserMessageInfo.class, userSasha.getId());
 
             em.getTransaction().commit();
         }
