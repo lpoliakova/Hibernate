@@ -1,6 +1,12 @@
 import entities.Message;
+import entities.User;
 import org.junit.Test;
+import values.Credentials;
+import values.UserName;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,14 +22,17 @@ public class MessageTest {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("myTest");
         EntityManager em = emf.createEntityManager();
 
-        Message message = new Message();
-        message.setUserId(1L);
-        message.setText("Concur the world");
+        String login = "sashenka";
+        String firstName = "Oleksandr";
+        String lastName = "Radchykov";
+        User userSasha = new User(new Credentials(login, new UserName(firstName, lastName)));
+        Message message;
 
         try {
             em.getTransaction().begin();
 
-            em.persist(message);
+            message = userSasha.writeMessage("Concur the world");
+            em.persist(userSasha);
 
             em.getTransaction().commit();
         }
@@ -32,24 +41,17 @@ public class MessageTest {
                 em.getTransaction().rollback();
         }
 
-        List<Message> messages;
+        User actualUser = emf.createEntityManager().find(User.class, userSasha.getId());
+        List<Message> actualMessages = actualUser.getMessages();
 
-        try {
-            em.getTransaction().begin();
+        assertNotNull(actualMessages);
+        assertEquals(1, actualMessages.size());
 
-            messages = em.createQuery("select m from Message m", Message.class).getResultList();
+        Message actualMessage = actualMessages.get(0);
 
-            em.getTransaction().commit();
-        }
-        finally {
-            if (em.getTransaction().isActive())
-                em.getTransaction().rollback();
-        }
+        assertEquals(message.getCreator().getId(), actualMessage.getCreator().getId());
+        assertEquals(message.getText(), actualMessage.getText());
 
-        assertEquals(1, messages.size());
-        assertEquals(message.getUserId(), messages.get(0).getUserId());
-        assertEquals(message.getText(), messages.get(0).getText());
-
-        System.out.println(messages.get(0).getCreationTimestamp());
+        System.out.println(actualMessage.getCreationTimestamp());
     }
 }

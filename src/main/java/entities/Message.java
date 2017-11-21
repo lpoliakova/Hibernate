@@ -1,5 +1,7 @@
 package entities;
 
+import com.sun.istack.internal.NotNull;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,40 +15,39 @@ public class Message {
     @GeneratedValue
     private Long id;
 
-    @Column(insertable = false)
-    @org.hibernate.annotations.ColumnDefault("1")
-    @org.hibernate.annotations.Generated(
-            org.hibernate.annotations.GenerationTime.INSERT
-    )
-    private Long userId;
     private String text;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY,
+        optional = false)
+    @JoinColumn(
+            name = "user_id",
+            updatable = false)
+    private User creator;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
     @org.hibernate.annotations.CreationTimestamp
     private Date creationTimestamp;
 
-    public Long getUserId() {
-        return userId;
+    protected Message() {
+
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public Message(String text, User creator) {
+        this.text = text;
+        this.creator = creator;
     }
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public User getCreator() {
+        return creator;
     }
 
     public Date getCreationTimestamp() {
         return creationTimestamp;
-    }
-
-    public void setCreationTimestamp(Date creationTimestamp) {
-        this.creationTimestamp = creationTimestamp;
     }
 }
