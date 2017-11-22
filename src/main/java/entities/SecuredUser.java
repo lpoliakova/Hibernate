@@ -2,6 +2,7 @@ package entities;
 
 import values.Credentials;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
@@ -9,8 +10,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
  * Created by oradchykova on 11/8/17.
  */
 @Entity
-@PrimaryKeyJoinColumn(name = "SECURED_USER")
+@PrimaryKeyJoinColumn(name = "fk_users")
 public class SecuredUser extends User{
+
+    @Column(nullable = false)
     private String password;
 
     protected SecuredUser() {

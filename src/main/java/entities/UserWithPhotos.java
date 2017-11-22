@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "USER_WITH_PHOTOS")
+@PrimaryKeyJoinColumn(name = "fk_users")
 public class UserWithPhotos extends User {
 
     @ElementCollection
-    @CollectionTable(name = "PHOTOS")
-    @MapKeyColumn(name = "PHOTO_NAME")
+    @MapKeyColumn(name = "photo_name")
+    @JoinColumn(name = "fk_users")
     private Map<String, Image> photos = new HashMap<>();
 
     protected UserWithPhotos() {

@@ -5,9 +5,9 @@ import javax.persistence.Id;
 
 @Entity
 @org.hibernate.annotations.Subselect(value =
-        "select u.id as userId, u.login as userLogin, COUNT(m.id) as messageCount " +
-                "from USER u left join MESSAGE m on u.id = m.user_id " +
-                "group by u.ID")
+        "select u.user_id as userId, u.login as userLogin, COUNT(m.fk_users) as messageCount " +
+                "from User u left join Message m on u.user_id = m.fk_users " +
+                "group by u.user_id")
 @org.hibernate.annotations.Synchronize({"User", "Message"})
 public class UserMessageInfo {
     private Long userId;

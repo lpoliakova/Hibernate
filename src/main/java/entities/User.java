@@ -12,33 +12,34 @@ import java.util.List;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "USER_TYPE")
+@DiscriminatorColumn(name = "user_type")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long id;
 
     private Credentials credentials;
 
     @OneToMany(mappedBy = "creator",
             cascade = CascadeType.PERSIST,
-            orphanRemoval = true)
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
     @OrderColumn(
-            name = "MESSAGE_POSITION"
+            name = "message_position"
     )
     private List<Message> messages = new ArrayList<>();
 
     @OneToOne (
             fetch = FetchType.LAZY,
-            /*optional = false,*/
             cascade = CascadeType.PERSIST
     )
     private Device device;
 
-    @Column(name = "PRIORITY")
+    @Column(nullable = false)
     @org.hibernate.annotations.ColumnTransformer(
-            forColumn = "PRIORITY",
-            read = "PRIORITY - 1",
+            forColumn = "priority",
+            read = "priority - 1",
             write = "? + 1"
     )
     private int priority;

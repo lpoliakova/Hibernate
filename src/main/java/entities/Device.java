@@ -9,17 +9,23 @@ import javax.persistence.*;
 public class Device {
     @Id
     @GeneratedValue
+    @Column(name = "device_id")
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "device_type",
+            nullable = false, updatable = false)
     private DeviceType type;
+
+    @Column(nullable = false, updatable = false)
     private String model;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,
+        mappedBy = "device")
     @JoinTable(
-            name = "USER_DEVICE",
-            joinColumns = @JoinColumn(name = "DEVICE_ID"),
-            inverseJoinColumns = @JoinColumn(name = "USER_ID", unique = true)
+            name = "user_device",
+            joinColumns = @JoinColumn(name = "fk_device"),
+            inverseJoinColumns = @JoinColumn(name = "fk_user", unique = true)
     )
     private User user;
 
@@ -39,16 +45,8 @@ public class Device {
         return type;
     }
 
-    public void setType(DeviceType type) {
-        this.type = type;
-    }
-
     public String getModel() {
         return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public User getUser() {

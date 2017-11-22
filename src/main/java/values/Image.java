@@ -5,9 +5,13 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Image {
-    @Column(name = "FILE_NAME")
+    @Column(name = "file_name",
+            nullable = false, updatable = false)
     private String fileName;
+
+    @Column(nullable = false, updatable = false)
     private String extension;
+
     private Integer height;
     private Integer width;
 

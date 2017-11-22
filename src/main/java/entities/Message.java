@@ -13,20 +13,21 @@ public class Message {
 
     @Id
     @GeneratedValue
+    @Column(name = "message_id")
     private Long id;
 
+    @Column(nullable = false)
     private String text;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY,
         optional = false)
     @JoinColumn(
-            name = "user_id",
+            name = "fk_users",
             updatable = false)
     private User creator;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(updatable = false)
+    @Column(name = "creation_dtm", updatable = false) //TODO: nullable = false
     @org.hibernate.annotations.CreationTimestamp
     private Date creationTimestamp;
 

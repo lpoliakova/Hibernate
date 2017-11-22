@@ -11,12 +11,12 @@ import java.util.Set;
  * Created by oradchykova on 11/8/17.
  */
 @Entity
-@PrimaryKeyJoinColumn(name = "USER_WITH_EMAIL")
+@PrimaryKeyJoinColumn(name = "fk_users")
 public class UserWithEmail extends User {
     @ElementCollection
-    @CollectionTable(name = "EMAILS")
-    @Column(name = "EMAIL")
-    @org.hibernate.annotations.OrderBy(clause = "EMAIL desc")
+    @Column(name = "email", nullable = false)
+    @JoinColumn(name = "fk_users")
+    @org.hibernate.annotations.OrderBy(clause = "email desc")
     private Set<String> emails = new LinkedHashSet<>();
 
     protected UserWithEmail() {

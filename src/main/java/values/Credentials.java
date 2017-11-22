@@ -13,13 +13,12 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class Credentials {
-    @Column(name = "LOGIN", nullable = false)
-    String login;
+    @Column(nullable = false)
+    private String login;
 
-    @NotNull
     @Convert(converter = UserNameConverter.class)
-    @Column(name = "USER_NAME")
-    UserName name;
+    @Column(name = "user_name", nullable = false)
+    private UserName name;
 
     protected Credentials() {
 
