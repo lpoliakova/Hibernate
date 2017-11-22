@@ -37,4 +37,22 @@ public class UserWithEmail extends User {
     public void removeEmail(String email) {
         this.emails.remove(email);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        UserWithEmail that = (UserWithEmail) o;
+
+        return emails.equals(that.emails);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + emails.hashCode();
+        return result;
+    }
 }

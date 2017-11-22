@@ -88,4 +88,26 @@ public class User {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (priority != user.priority) return false;
+        if (!credentials.equals(user.credentials)) return false;
+        if (!messages.equals(user.messages)) return false;
+        return device != null ? device.equals(user.device) : user.device == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = credentials.hashCode();
+        result = 31 * result + messages.hashCode();
+        result = 31 * result + (device != null ? device.hashCode() : 0);
+        result = 31 * result + priority;
+        return result;
+    }
 }

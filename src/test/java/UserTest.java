@@ -50,10 +50,7 @@ public class UserTest {
         User foundUser = em.find(User.class, userSasha.getId());
 
         assertEquals(User.class, foundUser.getClass());
-        assertEquals(login, foundUser.getCredentials().getLogin());
-        assertEquals(firstName, foundUser.getCredentials().getName().getFirstName());
-        assertEquals(lastName, foundUser.getCredentials().getName().getLastName());
-        assertEquals(priority, foundUser.getPriority());
+        assertEquals(userSasha, foundUser);
     }
 
     @Test
@@ -70,7 +67,7 @@ public class UserTest {
         User foundUser = em.find(User.class, userSasha.getId());
 
         assertEquals(SecuredUser.class, foundUser.getClass());
-        assertEquals(password, ((SecuredUser)foundUser).getPassword());
+        assertEquals(userSasha, foundUser);
     }
 
     @Test
@@ -90,7 +87,7 @@ public class UserTest {
         User foundUser = em.find(User.class, userSasha.getId());
 
         assertEquals(UserWithEmail.class, foundUser.getClass());
-        assertEquals(emails, ((UserWithEmail)foundUser).getEmails());
+        assertEquals(userSasha, foundUser);
     }
 
     @Test
@@ -110,7 +107,7 @@ public class UserTest {
         User foundUser = em.find(User.class, userSasha.getId());
 
         assertEquals(UserWithPhotos.class, foundUser.getClass());
-        assertEquals(photos, ((UserWithPhotos)foundUser).getPhotos());
+        assertEquals(userSasha, foundUser);
     }
 
     private void persistUser(User user) {
