@@ -80,5 +80,7 @@ public class DeviceTest {
 
         User foundUser = em.find(User.class, userSasha.getId());
 
+        assertEquals(foundUser.getDevice().getType(), userSasha.getDevice().getType());
+        assertEquals(foundUser.getDevice().getModel(), userSasha.getDevice().getModel());
     }
 }
