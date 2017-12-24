@@ -1,11 +1,10 @@
 package entities;
 
+import org.hibernate.annotations.Cascade;
 import values.Credentials;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by oradchykova on 8/21/17.
@@ -20,6 +19,11 @@ public class User {
     private Long id;
 
     private Credentials credentials;
+
+    @OneToMany(
+            mappedBy = "user"
+    )
+    private Set<UserInGroup> groups = new HashSet<>();
 
     @OneToMany(mappedBy = "creator",
             cascade = CascadeType.PERSIST,
@@ -61,6 +65,19 @@ public class User {
 
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
+    }
+
+    public Set<UserInGroup> getGroups() {
+        return groups;
+//        return Collections.unmodifiableSet(groups);
+    }
+
+    public void addGroup(UserInGroup group) {
+        groups.add(group);
+    }
+
+    public void removeGroup(UserInGroup group) {
+        groups.remove(group);
     }
 
     public List<Message> getMessages() {
