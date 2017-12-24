@@ -1,6 +1,5 @@
 package entities;
 
-import org.hibernate.annotations.Cascade;
 import values.Credentials;
 
 import javax.persistence.*;
@@ -10,6 +9,7 @@ import java.util.*;
  * Created by oradchykova on 8/21/17.
  */
 @Entity
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "user_type")
 public class User {

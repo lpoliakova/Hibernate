@@ -1,7 +1,5 @@
 package entities;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -9,6 +7,7 @@ import java.util.Date;
  * Created by oradchykova on 7/8/17.
  */
 @Entity
+@Table(name = "messages")
 public class Message {
 
     @Id

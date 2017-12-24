@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by oradchykova on 11/16/17.
  */
 @Entity
+@Table(name = "devices")
 public class Device {
     @Id
     @GeneratedValue
