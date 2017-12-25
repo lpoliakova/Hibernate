@@ -6,6 +6,9 @@ import org.hibernate.annotations.GenerationTime;
 import util.UserInGroupId;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "groups_users")
@@ -26,6 +29,15 @@ public class UserInGroup {
     @MapsId("userId")
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "place",
+            cascade = CascadeType.PERSIST,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    @OrderColumn(
+            name = "message_position"
+    )
+    private List<Message> messages = new ArrayList<>();
 
     protected UserInGroup() {
 
@@ -57,6 +69,17 @@ public class UserInGroup {
     public User getUser() {
         return user;
     }
+
+    public List<Message> getMessages() {
+        return Collections.unmodifiableList(messages);
+    }
+
+    public Message writeMessage(String text) {
+        Message message = new Message(text, this);
+        messages.add(message);
+        return message;
+    }
+
 
     public void setMuted(Boolean muted) {
         this.muted = muted;

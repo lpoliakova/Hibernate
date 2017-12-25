@@ -1,5 +1,7 @@
+import entities.Group;
 import entities.Message;
 import entities.User;
+import entities.UserInGroup;
 import org.junit.Test;
 import values.Credentials;
 import values.UserName;
@@ -25,14 +27,19 @@ public class MessageTest {
         String login = "sashenka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
+        Group world = new Group("world");
         User userSasha = new User(new Credentials(login, new UserName(firstName, lastName)));
+        UserInGroup sashaInWorld;
         Message message;
 
         try {
             em.getTransaction().begin();
 
-            message = userSasha.writeMessage("Concur the world");
             em.persist(userSasha);
+            em.persist(world);
+            sashaInWorld = new UserInGroup(world, userSasha);
+            message = sashaInWorld.writeMessage("Concur the world");
+            em.persist(sashaInWorld);
 
             em.getTransaction().commit();
         }
@@ -41,15 +48,15 @@ public class MessageTest {
                 em.getTransaction().rollback();
         }
 
-        User actualUser = emf.createEntityManager().find(User.class, userSasha.getId());
-        List<Message> actualMessages = actualUser.getMessages();
+        UserInGroup actualPlace = emf.createEntityManager().find(UserInGroup.class, sashaInWorld.getId());
+        List<Message> actualMessages = actualPlace.getMessages();
 
         assertNotNull(actualMessages);
         assertEquals(1, actualMessages.size());
 
         Message actualMessage = actualMessages.get(0);
 
-        assertEquals(message.getCreator().getId(), actualMessage.getCreator().getId());
+        assertEquals(message.getPlace().getId(), actualMessage.getPlace().getId());
         assertEquals(message.getText(), actualMessage.getText());
 
         System.out.println(actualMessage.getCreationTimestamp());

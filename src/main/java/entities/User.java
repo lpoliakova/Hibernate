@@ -25,15 +25,6 @@ public class User {
     )
     private Set<UserInGroup> groups = new HashSet<>();
 
-    @OneToMany(mappedBy = "creator",
-            cascade = CascadeType.PERSIST,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
-    @OrderColumn(
-            name = "message_position"
-    )
-    private List<Message> messages = new ArrayList<>();
-
     @OneToOne (
             fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST
@@ -80,16 +71,6 @@ public class User {
         groups.remove(group);
     }
 
-    public List<Message> getMessages() {
-        return Collections.unmodifiableList(messages);
-    }
-
-    public Message writeMessage(String text) {
-        Message message = new Message(text, this);
-        messages.add(message);
-        return message;
-    }
-
     public Device getDevice() {
         return device;
     }
@@ -115,14 +96,12 @@ public class User {
 
         if (priority != user.priority) return false;
         if (!credentials.equals(user.credentials)) return false;
-        if (!messages.equals(user.messages)) return false;
         return device != null ? device.equals(user.device) : user.device == null;
     }
 
     @Override
     public int hashCode() {
         int result = credentials.hashCode();
-        result = 31 * result + messages.hashCode();
         result = 31 * result + (device != null ? device.hashCode() : 0);
         result = 31 * result + priority;
         return result;

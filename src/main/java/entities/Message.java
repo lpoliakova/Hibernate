@@ -20,10 +20,15 @@ public class Message {
 
     @ManyToOne(fetch = FetchType.LAZY,
         optional = false)
-    @JoinColumn(
-            name = "fk_users",
-            updatable = false)
-    private User creator;
+    @JoinColumns({
+            @JoinColumn(
+                    name = "fk_groups",
+                    updatable = false),
+            @JoinColumn(
+                    name = "fk_users",
+                    updatable = false)
+    })
+    private UserInGroup place;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_dtm", updatable = false) //TODO: nullable = false
@@ -34,17 +39,17 @@ public class Message {
 
     }
 
-    public Message(String text, User creator) {
+    public Message(String text, UserInGroup place) {
         this.text = text;
-        this.creator = creator;
+        this.place = place;
     }
 
     public String getText() {
         return text;
     }
 
-    public User getCreator() {
-        return creator;
+    public UserInGroup getPlace() {
+        return place;
     }
 
     public Date getCreationTimestamp() {

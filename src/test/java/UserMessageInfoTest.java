@@ -20,12 +20,21 @@ public class UserMessageInfoTest {
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
         User userSasha = new User(new Credentials(login, new UserName(firstName, lastName)));
-        userSasha.writeMessage("Concur the world");
+        Group family = new Group("family");
+        UserInGroup sashaInFamily = new UserInGroup(family, userSasha);
+        Group work = new Group("work");
+        UserInGroup sashaInWork = new UserInGroup(work, userSasha);
 
         try {
             em.getTransaction().begin();
 
             em.persist(userSasha);
+            em.persist(family);
+            em.persist(work);
+            sashaInFamily.writeMessage("Concur the world");
+            em.persist(sashaInFamily);
+            sashaInWork.writeMessage("Concur the world");
+            em.persist(sashaInWork);
 
             em.getTransaction().commit();
         }
@@ -49,6 +58,6 @@ public class UserMessageInfoTest {
         }
 
         assertEquals(login, userMessageInfo.getUserLogin());
-        assertEquals(new Integer(1), userMessageInfo.getMessageCount());
+        assertEquals(new Integer(2), userMessageInfo.getMessageCount());
     }
 }
