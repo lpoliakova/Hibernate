@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by oradchykova on 8/21/17.
@@ -49,8 +50,7 @@ public class UserTest {
 
         User foundUser = em.find(User.class, userSasha.getId());
 
-        assertEquals(User.class, foundUser.getClass());
-        assertEquals(userSasha, foundUser);
+        assertUserEquals(userSasha, foundUser);
     }
 
     @Test
@@ -66,8 +66,8 @@ public class UserTest {
 
         User foundUser = em.find(User.class, userSasha.getId());
 
-        assertEquals(SecuredUser.class, foundUser.getClass());
-        assertEquals(userSasha, foundUser);
+        assertUserEquals(userSasha, foundUser);
+        assertEquals(((SecuredUser)userSasha).getPassword(), ((SecuredUser)foundUser).getPassword());
     }
 
     @Test
@@ -86,8 +86,8 @@ public class UserTest {
 
         User foundUser = em.find(User.class, userSasha.getId());
 
-        assertEquals(UserWithEmail.class, foundUser.getClass());
-        assertEquals(userSasha, foundUser);
+        assertUserEquals(userSasha, foundUser);
+        assertEquals(((UserWithEmail)userSasha).getEmails(), ((UserWithEmail)foundUser).getEmails());
     }
 
     @Test
@@ -106,8 +106,8 @@ public class UserTest {
 
         User foundUser = em.find(User.class, userSasha.getId());
 
-        assertEquals(UserWithPhotos.class, foundUser.getClass());
-        assertEquals(userSasha, foundUser);
+        assertUserEquals(userSasha, foundUser);
+        assertEquals(((UserWithPhotos)userSasha).getPhotos(), ((UserWithPhotos)foundUser).getPhotos());
     }
 
     private void persistUser(User user) {
@@ -122,5 +122,14 @@ public class UserTest {
                 em.getTransaction().rollback();
             }
         }
+    }
+
+    private void assertUserEquals(User first, User second) {
+        assertEquals(first.getClass(), second.getClass());
+        assertEquals(first.getCredentials(), second.getCredentials());
+        assertEquals(first.getCredentials().getName(), second.getCredentials().getName());
+        assertEquals(first.getGroups(), second.getGroups());
+        assertEquals(first.getDevice(), second.getDevice());
+        assertEquals(first.getPriority(), second.getPriority());
     }
 }

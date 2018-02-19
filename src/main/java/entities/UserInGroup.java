@@ -93,7 +93,6 @@ public class UserInGroup {
         UserInGroup that = (UserInGroup) o;
 
         if (!id.equals(that.id)) return false;
-        if (muted != null ? !muted.equals(that.muted) : that.muted != null) return false;
         if (!group.equals(that.group)) return false;
         return user.equals(that.user);
     }
@@ -101,7 +100,6 @@ public class UserInGroup {
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + (muted != null ? muted.hashCode() : 0);
         result = 31 * result + group.hashCode();
         result = 31 * result + user.hashCode();
         return result;

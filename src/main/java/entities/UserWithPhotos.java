@@ -35,22 +35,4 @@ public class UserWithPhotos extends User {
     public void removePhoto(String name) {
         this.photos.remove(name);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        UserWithPhotos that = (UserWithPhotos) o;
-
-        return photos.equals(that.photos);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + photos.hashCode();
-        return result;
-    }
 }

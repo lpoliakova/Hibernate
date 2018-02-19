@@ -94,16 +94,14 @@ public class User {
 
         User user = (User) o;
 
-        if (priority != user.priority) return false;
-        if (!credentials.equals(user.credentials)) return false;
-        return device != null ? device.equals(user.device) : user.device == null;
+        if (!id.equals(user.id)) return false;
+        return credentials.equals(user.credentials);
     }
 
     @Override
     public int hashCode() {
-        int result = credentials.hashCode();
-        result = 31 * result + (device != null ? device.hashCode() : 0);
-        result = 31 * result + priority;
+        int result = id.hashCode();
+        result = 31 * result + credentials.hashCode();
         return result;
     }
 }

@@ -60,14 +60,11 @@ public class Group {
 
         Group group = (Group) o;
 
-        if (!id.equals(group.id)) return false;
-        return name.equals(group.name);
+        return id.equals(group.id);
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
+        return id.hashCode();
     }
 }

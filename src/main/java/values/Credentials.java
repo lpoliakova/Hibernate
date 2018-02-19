@@ -52,14 +52,11 @@ public class Credentials {
 
         Credentials that = (Credentials) o;
 
-        if (!login.equals(that.login)) return false;
-        return name.equals(that.name);
+        return login.equals(that.login);
     }
 
     @Override
     public int hashCode() {
-        int result = login.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
+        return login.hashCode();
     }
 }
