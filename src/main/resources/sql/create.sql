@@ -1,0 +1,1 @@
+CREATE TRIGGER check_email BEFORE INSERT ON UserWithEmail_emails FOR EACH ROW BEGIN IF position('@' in NEW.email) <= 1 THEN signal sqlstate '45000' set message_text = 'Cannot add or update row: wrong email'; END IF; END;

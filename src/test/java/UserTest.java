@@ -1,27 +1,27 @@
 import entities.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import values.Credentials;
 import values.Image;
 import values.UserName;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by oradchykova on 8/21/17.
  */
 public class UserTest {
-    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("myTest");
-    private EntityManager em = emf.createEntityManager();
+    private EntityManagerFactory emf;
+    //private EntityManager em = emf.createEntityManager();
 
     @Test
     public void testUser(){
@@ -31,6 +31,8 @@ public class UserTest {
         int priority = 5;
         Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
         User userSasha = new User(sashasCredentials);
+
+        EntityManager em = emf.createEntityManager();
 
         try {
             em.getTransaction().begin();
@@ -46,11 +48,20 @@ public class UserTest {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
+            em.close();
         }
 
-        User foundUser = em.find(User.class, userSasha.getId());
+        try {
+            em = emf.createEntityManager();
+            User foundUser = em.find(User.class, userSasha.getId());
 
-        assertUserEquals(userSasha, foundUser);
+            assertUserEquals(userSasha, foundUser);
+        } finally {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            em.close();
+        }
     }
 
     @Test
@@ -64,10 +75,13 @@ public class UserTest {
 
         persistUser(userSasha);
 
+        EntityManager em = emf.createEntityManager();
         User foundUser = em.find(User.class, userSasha.getId());
 
         assertUserEquals(userSasha, foundUser);
         assertEquals(((SecuredUser)userSasha).getPassword(), ((SecuredUser)foundUser).getPassword());
+
+        em.close();
     }
 
     @Test
@@ -76,22 +90,51 @@ public class UserTest {
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
         Set<String> emails = new HashSet<>();
-        emails.add("sasha@ex.com");
-        emails.add("radchykov@ex.com");
+        emails.add("sasha@exmp.com");
+        emails.add("radchykov@exmp.com");
         Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
         User userSasha = new UserWithEmail(sashasCredentials);
         emails.forEach(((UserWithEmail) userSasha)::addEmail);
 
         persistUser(userSasha);
 
+        EntityManager em = emf.createEntityManager();
         User foundUser = em.find(User.class, userSasha.getId());
 
         assertUserEquals(userSasha, foundUser);
         assertEquals(((UserWithEmail)userSasha).getEmails(), ((UserWithEmail)foundUser).getEmails());
+
+        em.close();
+    }
+
+    @Test
+    public void testUserWithWrongEmail(){
+        String login = "sashen'ka";
+        String firstName = "Oleksandr";
+        String lastName = "Radchykov";
+        Set<String> emails = new HashSet<>();
+        emails.add("radchykov.com");
+        Credentials sashasCredentials = new Credentials(login, new UserName(firstName, lastName));
+        User userSasha = new UserWithEmail(sashasCredentials);
+        emails.forEach(((UserWithEmail) userSasha)::addEmail);
+
+        try {
+            persistUser(userSasha);
+            assertFalse(true);
+        } catch (javax.persistence.RollbackException ex) {
+            assertTrue(true);
+        }
+
+        EntityManager em = emf.createEntityManager();
+        User foundUser = em.find(User.class, userSasha.getId());
+
+        assertNull(foundUser);
+        em.close();
     }
 
     @Test
     public void testUserWithPhotos(){
+
         String login = "sashen'ka";
         String firstName = "Oleksandr";
         String lastName = "Radchykov";
@@ -104,13 +147,17 @@ public class UserTest {
 
         persistUser(userSasha);
 
+        EntityManager em = emf.createEntityManager();
         User foundUser = em.find(User.class, userSasha.getId());
 
         assertUserEquals(userSasha, foundUser);
         assertEquals(((UserWithPhotos)userSasha).getPhotos(), ((UserWithPhotos)foundUser).getPhotos());
+
+        em.close();
     }
 
     private void persistUser(User user) {
+        EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
 
@@ -121,6 +168,7 @@ public class UserTest {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
+            em.close();
         }
     }
 
@@ -131,5 +179,17 @@ public class UserTest {
         assertEquals(first.getGroups(), second.getGroups());
         assertEquals(first.getDevice(), second.getDevice());
         assertEquals(first.getPriority(), second.getPriority());
+    }
+
+    @Before
+    public void initEntityManagerFactory() {
+        emf = Persistence.createEntityManagerFactory("myTest");
+    }
+
+    @After
+    public void dropEntityManagerFactory() {
+        if (emf.isOpen()) {
+            emf.close();
+        }
     }
 }
