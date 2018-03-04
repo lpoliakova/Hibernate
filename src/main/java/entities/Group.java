@@ -22,11 +22,22 @@ public class Group {
     )
     private Set<UserInGroup> users = new HashSet<>();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "group_scope",
+            nullable = false, updatable = false)
+    private GroupScope scope;
+
     protected Group() {
     }
 
     public Group(String name) {
         this.name = name;
+        this.scope = GroupScope.PRIVATE;
+    }
+
+    public Group(String name, GroupScope scope) {
+        this.name = name;
+        this.scope = scope;
     }
 
     public Long getId() {
@@ -46,11 +57,18 @@ public class Group {
     }
 
     public void addUserToGroup(UserInGroup user) {
+        if (scope == GroupScope.PRIVATE && users.size() >= 2) {
+            throw new IllegalArgumentException();
+        }
         users.add(user);
     }
 
     public void removeUser(UserInGroup user) {
         users.remove(user);
+    }
+
+    public GroupScope getScope() {
+        return scope;
     }
 
     @Override
@@ -66,5 +84,10 @@ public class Group {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    public enum GroupScope {
+        PRIVATE,
+        PUBLIC
     }
 }
