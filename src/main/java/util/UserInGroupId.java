@@ -10,7 +10,7 @@ public class UserInGroupId implements Serializable{
     @Column(name = "fk_groups")
     private Long groupId;
 
-    @Column(name = "fk_user")
+    @Column(name = "fk_users")
     private Long userId;
 
     public UserInGroupId(){}

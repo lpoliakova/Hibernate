@@ -11,11 +11,17 @@ import java.util.Set;
  * Created by oradchykova on 11/8/17.
  */
 @Entity
-@PrimaryKeyJoinColumn(name = "fk_users")
+@Table(name = "users_with_emails")
+@PrimaryKeyJoinColumn(
+        name = "fk_users",
+        foreignKey = @ForeignKey(name = "fk_users_with_emails_users_user_id"))
 public class UserWithEmail extends User {
+
     @ElementCollection
+    @CollectionTable(name = "emails")
     @Column(name = "email", nullable = false)
     @JoinColumn(name = "fk_users")
+    @org.hibernate.annotations.ForeignKey(name = "emails_users_with_emails_fk_users")
     @org.hibernate.annotations.OrderBy(clause = "email desc")
     private Set<String> emails = new LinkedHashSet<>();
 

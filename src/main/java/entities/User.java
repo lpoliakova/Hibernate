@@ -26,6 +26,7 @@ public class User {
     private Set<UserInGroup> groups = new HashSet<>();
 
     @OneToOne (
+            mappedBy = "user",
             fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST
     )

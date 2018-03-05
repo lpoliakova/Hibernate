@@ -20,7 +20,8 @@ public class Message {
 
     @ManyToOne(fetch = FetchType.LAZY,
         optional = false)
-    @JoinColumns({
+    @JoinColumns(foreignKey = @ForeignKey(name = "fk_messages_groups_users_group_id_user_id"),
+            value = {
             @JoinColumn(
                     name = "fk_groups",
                     updatable = false),

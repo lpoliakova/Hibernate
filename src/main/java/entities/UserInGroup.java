@@ -24,10 +24,18 @@ public class UserInGroup {
 
     @MapsId("groupId")
     @ManyToOne
+    @JoinColumn(
+            name = "fk_groups",
+            foreignKey = @ForeignKey(name = "fk_groups_users_groups_group_id")
+    )
     private Group group;
 
     @MapsId("userId")
     @ManyToOne
+    @JoinColumn(
+            name = "fk_users",
+            foreignKey = @ForeignKey(name = "fk_groups_users_users_user_id")
+    )
     private User user;
 
     @OneToMany(mappedBy = "place",

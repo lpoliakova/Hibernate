@@ -21,12 +21,13 @@ public class Device {
     @Column(nullable = false, updatable = false)
     private String model;
 
-    @OneToOne(fetch = FetchType.LAZY,
-        mappedBy = "device")
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_device",
             joinColumns = @JoinColumn(name = "fk_device"),
-            inverseJoinColumns = @JoinColumn(name = "fk_user", unique = true)
+            inverseJoinColumns = @JoinColumn(name = "fk_user", unique = true)//,
+            //foreignKey = @ForeignKey(name = "fk_user_device_devices_device_id"),
+            //inverseForeignKey = @ForeignKey(name = "fk_user_device_users_user_id")
     )
     private User user;
 

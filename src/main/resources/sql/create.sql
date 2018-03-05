@@ -1,3 +1,3 @@
-CREATE TRIGGER check_email BEFORE INSERT ON UserWithEmail_emails FOR EACH ROW BEGIN IF position('@' in NEW.email) <= 1 THEN signal sqlstate '45000' set message_text = 'Cannot add row: wrong email'; END IF; END;
+CREATE TRIGGER check_email BEFORE INSERT ON emails FOR EACH ROW BEGIN IF position('@' in NEW.email) <= 1 THEN signal sqlstate '45000' set message_text = 'Cannot add row: wrong email'; END IF; END;
 
 CREATE TRIGGER check_private_group BEFORE INSERT ON groups_users FOR EACH ROW BEGIN IF (SELECT COUNT(*) FROM (groups_users INNER JOIN groups ON groups_users.group_group_id = groups.group_id) WHERE (groups_users.group_group_id = group_group_id && groups.group_scope = 'PRIVATE')) >= 2 THEN signal sqlstate '45000' set message_text = 'Cannot add row: private group can\'t contain more then two users'; END IF; END;

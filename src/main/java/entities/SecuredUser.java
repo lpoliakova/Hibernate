@@ -2,15 +2,16 @@ package entities;
 
 import values.Credentials;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 
 /**
  * Created by oradchykova on 11/8/17.
  */
 @Entity
-@PrimaryKeyJoinColumn(name = "fk_users")
+@Table(name = "secured_users")
+@PrimaryKeyJoinColumn(
+        name = "fk_users",
+        foreignKey = @ForeignKey(name = "fk_secured_users_users_user_id"))
 public class SecuredUser extends User{
 
     @Column(nullable = false)
