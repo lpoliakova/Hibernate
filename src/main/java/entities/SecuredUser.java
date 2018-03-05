@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "secured_users")
 @PrimaryKeyJoinColumn(
         name = "fk_users",
+        referencedColumnName = "user_id",
         foreignKey = @ForeignKey(name = "fk_secured_users_users_user_id"))
 public class SecuredUser extends User{
 

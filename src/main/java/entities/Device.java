@@ -24,8 +24,8 @@ public class Device {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_device",
-            joinColumns = @JoinColumn(name = "fk_device"),
-            inverseJoinColumns = @JoinColumn(name = "fk_user", unique = true)//,
+            joinColumns = @JoinColumn(name = "fk_device", referencedColumnName = "device_id"),
+            inverseJoinColumns = @JoinColumn(name = "fk_user", referencedColumnName = "user_id", unique = true)//,
             //foreignKey = @ForeignKey(name = "fk_user_device_devices_device_id"),
             //inverseForeignKey = @ForeignKey(name = "fk_user_device_users_user_id")
     )

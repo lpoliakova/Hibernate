@@ -26,6 +26,7 @@ public class UserInGroup {
     @ManyToOne
     @JoinColumn(
             name = "fk_groups",
+            referencedColumnName = "group_id",
             foreignKey = @ForeignKey(name = "fk_groups_users_groups_group_id")
     )
     private Group group;
@@ -34,6 +35,7 @@ public class UserInGroup {
     @ManyToOne
     @JoinColumn(
             name = "fk_users",
+            referencedColumnName = "user_id",
             foreignKey = @ForeignKey(name = "fk_groups_users_users_user_id")
     )
     private User user;

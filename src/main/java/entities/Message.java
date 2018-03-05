@@ -24,9 +24,11 @@ public class Message {
             value = {
             @JoinColumn(
                     name = "fk_groups",
+                    referencedColumnName = "fk_groups",
                     updatable = false),
             @JoinColumn(
                     name = "fk_users",
+                    referencedColumnName = "fk_users",
                     updatable = false)
     })
     private UserInGroup place;

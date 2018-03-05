@@ -14,13 +14,14 @@ import java.util.Set;
 @Table(name = "users_with_emails")
 @PrimaryKeyJoinColumn(
         name = "fk_users",
+        referencedColumnName = "user_id",
         foreignKey = @ForeignKey(name = "fk_users_with_emails_users_user_id"))
 public class UserWithEmail extends User {
 
     @ElementCollection
     @CollectionTable(name = "emails")
     @Column(name = "email", nullable = false)
-    @JoinColumn(name = "fk_users")
+    @JoinColumn(name = "fk_users", referencedColumnName = "fk_users")
     @org.hibernate.annotations.ForeignKey(name = "emails_users_with_emails_fk_users")
     @org.hibernate.annotations.OrderBy(clause = "email desc")
     private Set<String> emails = new LinkedHashSet<>();
