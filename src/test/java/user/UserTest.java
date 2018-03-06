@@ -1,14 +1,17 @@
-import entities.*;
+package user;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import values.Credentials;
-import values.Image;
-import values.UserName;
+import user.SecuredUser;
+import user.User;
+import user.UserWithEmail;
+import user.UserWithPhotos;
+import user.Credentials;
+import user.Image;
+import user.UserName;
 
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
 

@@ -16,4 +16,4 @@
                 )
         }
 )
-package entities;
+package user;

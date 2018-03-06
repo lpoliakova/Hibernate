@@ -1,7 +1,4 @@
-package entities;
-
-import values.Credentials;
-import values.Image;
+package user;
 
 import javax.persistence.*;
 import java.util.Collections;

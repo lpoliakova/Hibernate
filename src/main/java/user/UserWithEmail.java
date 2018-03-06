@@ -1,6 +1,4 @@
-package entities;
-
-import values.Credentials;
+package user;
 
 import javax.persistence.*;
 import java.util.Collections;

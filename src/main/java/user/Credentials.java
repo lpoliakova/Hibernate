@@ -1,8 +1,6 @@
-package values;
+package user;
 
 import util.UserNameConverter;
-import com.sun.istack.internal.NotNull;
-import values.UserName;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;

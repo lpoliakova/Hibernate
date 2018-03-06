@@ -1,12 +1,14 @@
-import entities.Group;
-import entities.User;
-import entities.UserInGroup;
+package group;
+
+import group.Group;
+import user.User;
+import user.UserInGroup;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import values.Credentials;
-import values.UserName;
+import user.Credentials;
+import user.UserName;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

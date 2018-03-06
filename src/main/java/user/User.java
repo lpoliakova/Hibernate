@@ -1,6 +1,6 @@
-package entities;
+package user;
 
-import values.Credentials;
+import device.Device;
 
 import javax.persistence.*;
 import java.util.*;

@@ -6,15 +6,15 @@
             http://xmlns.jcp.org/xml/ns/persistence_2_1.xsd">
 
     <persistence-unit name="myTest">
-        <class>entities.Message</class>
-        <class>entities.User</class>
-        <class>util.UserMessageInfo</class>
-        <class>entities.SecuredUser</class>
-        <class>entities.UserWithEmail</class>
-        <class>entities.UserWithPhotos</class>
-        <class>entities.Device</class>
-        <class>entities.Group</class>
-        <class>entities.UserInGroup</class>
+        <class>message.Message</class>
+        <class>user.User</class>
+        <class>message.UserMessageInfo</class>
+        <class>user.SecuredUser</class>
+        <class>user.UserWithEmail</class>
+        <class>user.UserWithPhotos</class>
+        <class>device.Device</class>
+        <class>group.Group</class>
+        <class>user.UserInGroup</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

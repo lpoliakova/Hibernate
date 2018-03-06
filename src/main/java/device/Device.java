@@ -1,4 +1,6 @@
-package entities;
+package device;
+
+import user.User;
 
 import javax.persistence.*;
 

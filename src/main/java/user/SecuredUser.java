@@ -1,6 +1,4 @@
-package entities;
-
-import values.Credentials;
+package user;
 
 import javax.persistence.*;
 
@@ -13,7 +11,7 @@ import javax.persistence.*;
         name = "fk_users",
         referencedColumnName = "user_id",
         foreignKey = @ForeignKey(name = "fk_secured_users_users_user_id"))
-public class SecuredUser extends User{
+public class SecuredUser extends User {
 
     @Column(nullable = false)
     private String password;

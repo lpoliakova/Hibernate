@@ -1,10 +1,12 @@
-import entities.Group;
-import entities.Message;
-import entities.User;
-import entities.UserInGroup;
+package message;
+
+import group.Group;
+import message.Message;
+import user.User;
+import user.UserInGroup;
 import org.junit.Test;
-import values.Credentials;
-import values.UserName;
+import user.Credentials;
+import user.UserName;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

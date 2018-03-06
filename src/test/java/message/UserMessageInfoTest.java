@@ -1,8 +1,12 @@
-import entities.*;
+package message;
+
+import group.Group;
 import org.junit.Test;
-import util.UserMessageInfo;
-import values.Credentials;
-import values.UserName;
+import user.User;
+import user.UserInGroup;
+import message.UserMessageInfo;
+import user.Credentials;
+import user.UserName;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

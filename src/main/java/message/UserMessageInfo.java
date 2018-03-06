@@ -1,4 +1,4 @@
-package util;
+package message;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

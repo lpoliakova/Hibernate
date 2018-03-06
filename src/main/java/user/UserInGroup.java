@@ -1,9 +1,11 @@
-package entities;
+package user;
 
+import group.Group;
+import message.Message;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-import util.UserInGroupId;
+import group.UserInGroupId;
 
 import javax.persistence.*;
 import java.util.ArrayList;

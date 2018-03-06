@@ -1,4 +1,6 @@
-package entities;
+package group;
+
+import user.UserInGroup;
 
 import javax.persistence.*;
 import java.util.Collections;

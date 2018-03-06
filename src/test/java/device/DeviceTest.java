@@ -1,8 +1,10 @@
-import entities.Device;
-import entities.User;
+package device;
+
+import device.Device;
+import user.User;
 import org.junit.Test;
-import values.Credentials;
-import values.UserName;
+import user.Credentials;
+import user.UserName;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
