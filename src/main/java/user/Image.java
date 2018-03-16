@@ -1,4 +1,4 @@
-package user;
+package util;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
