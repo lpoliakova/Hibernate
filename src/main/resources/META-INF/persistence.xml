@@ -34,6 +34,7 @@
                       value="script-then-metadata" />
             <property name="javax.persistence.schema-generation.drop-script-source"
                       value="sql/drop.sql" />
+            <property name="hibernate.use_identifier_rollback" value="true" />
             <!-- <property name = "hibernate.show_sql" value = "true" /> -->
             <!-- <property name="hibernate.physical_naming_strategy" value="Util.MyNamingStrategy"/> -->
         </properties>
