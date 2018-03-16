@@ -1,4 +1,4 @@
-package util;
+package user;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -41,7 +41,7 @@ public class Image {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    void setHeight(Integer height) {
         this.height = height;
     }
 
@@ -49,7 +49,7 @@ public class Image {
         return width;
     }
 
-    public void setWidth(Integer width) {
+    void setWidth(Integer width) {
         this.width = width;
     }
 

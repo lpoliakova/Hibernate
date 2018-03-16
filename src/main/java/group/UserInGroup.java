@@ -1,7 +1,5 @@
 package group;
 
-import group.Group;
-import group.UserInGroupId;
 import message.Message;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Generated;

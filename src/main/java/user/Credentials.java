@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class Credentials {
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private String login;
 
     @Convert(converter = UserNameConverter.class)
@@ -31,15 +31,11 @@ public class Credentials {
         return login;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public UserName getName() {
         return name;
     }
 
-    public void setName(UserName name) {
+    void setName(UserName name) {
         this.name = name;
     }
 

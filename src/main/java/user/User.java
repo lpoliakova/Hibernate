@@ -1,6 +1,7 @@
 package user;
 
 import device.Device;
+import group.UserInGroup;
 
 import javax.persistence.*;
 import java.util.*;
@@ -55,10 +56,6 @@ public class User {
         return credentials;
     }
 
-    public void setCredentials(Credentials credentials) {
-        this.credentials = credentials;
-    }
-
     public Set<UserInGroup> getGroups() {
         return groups;
 //        return Collections.unmodifiableSet(groups);
@@ -68,7 +65,7 @@ public class User {
         groups.add(group);
     }
 
-    public void removeGroup(UserInGroup group) {
+    void removeGroup(UserInGroup group) { //TODO: remove public
         groups.remove(group);
     }
 
@@ -76,7 +73,7 @@ public class User {
         return device;
     }
 
-    public void setDevice(Device device) {
+    public void setDevice(Device device) { //TODO: remove public
         this.device = device;
     }
 
@@ -84,7 +81,7 @@ public class User {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    void setPriority(int priority) {
         this.priority = priority;
     }
 

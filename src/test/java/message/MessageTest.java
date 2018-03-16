@@ -1,9 +1,8 @@
 package message;
 
 import group.Group;
-import message.Message;
 import user.User;
-import user.UserInGroup;
+import group.UserInGroup;
 import org.junit.Test;
 import user.Credentials;
 import user.UserName;

@@ -31,11 +31,11 @@ public class UserWithPhotos extends User {
         return Collections.unmodifiableMap(photos);
     }
 
-    public void addPhoto(String name, Image photo) {
+    void addPhoto(String name, Image photo) {
         this.photos.put(name, photo);
     }
 
-    public void removePhoto(String name) {
+    void removePhoto(String name) {
         this.photos.remove(name);
     }
 }

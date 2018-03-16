@@ -35,11 +35,11 @@ public class UserWithEmail extends User {
         return Collections.unmodifiableSet(emails);
     }
 
-    public void addEmail(String email) {
+    void addEmail(String email) {
         this.emails.add(email);
     }
 
-    public void removeEmail(String email) {
+    void removeEmail(String email) {
         this.emails.remove(email);
     }
 }

@@ -1,6 +1,5 @@
 package device;
 
-import device.Device;
 import user.User;
 import org.junit.Test;
 import user.Credentials;

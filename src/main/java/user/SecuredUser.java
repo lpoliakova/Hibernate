@@ -28,7 +28,7 @@ public class SecuredUser extends User {
         return password;
     }
 
-    public void setPassword(String password) {
+    void setPassword(String password) {
         this.password = password;
     }
 }

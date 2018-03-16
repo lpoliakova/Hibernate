@@ -1,7 +1,5 @@
 package group;
 
-import user.UserInGroup;
-
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;

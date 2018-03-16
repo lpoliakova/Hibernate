@@ -1,8 +1,6 @@
 package group;
 
-import group.Group;
 import user.User;
-import user.UserInGroup;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

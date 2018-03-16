@@ -3,8 +3,7 @@ package message;
 import group.Group;
 import org.junit.Test;
 import user.User;
-import user.UserInGroup;
-import message.UserMessageInfo;
+import group.UserInGroup;
 import user.Credentials;
 import user.UserName;
 

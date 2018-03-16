@@ -14,7 +14,7 @@
         <class>user.UserWithPhotos</class>
         <class>device.Device</class>
         <class>group.Group</class>
-        <class>user.UserInGroup</class>
+        <class>group.UserInGroup</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

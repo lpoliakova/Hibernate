@@ -1,6 +1,6 @@
 package message;
 
-import user.UserInGroup;
+import group.UserInGroup;
 
 import javax.persistence.*;
 import java.util.Date;
