@@ -3,11 +3,9 @@ package user;
 import com.google.common.base.Strings;
 import device.Device;
 import group.UserInGroup;
-import org.hibernate.Session;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import util.EntityManagerFactoryControler;
+import util.EntityManagerFactoryController;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 public class UserController {
@@ -21,7 +19,7 @@ public class UserController {
 
     public static User createUser(String login, String firstName, String lastName) throws IllegalArgumentException {
         User user = createTransientUser(login, firstName, lastName);
-        persistUser(user);
+        EntityManagerFactoryController.persist(user);
         return user;
     }
 
@@ -36,7 +34,7 @@ public class UserController {
 
     public static SecuredUser createSecuredUser(String login, String firstName, String lastName, String password) throws IllegalArgumentException {
         SecuredUser user = createTransientSecuredUser(login, firstName, lastName, password);
-        persistUser(user);
+        EntityManagerFactoryController.persist(user);
         return user;
     }
 
@@ -56,7 +54,7 @@ public class UserController {
 
     public static UserWithEmail createUserWithEmail(String login, String firstName, String lastName, String email) throws IllegalArgumentException {
         UserWithEmail user = createTransientUserWithEmail(login, firstName, lastName, email);
-        persistUser(user);
+        EntityManagerFactoryController.persist(user);
         return user;
     }
 
@@ -73,7 +71,7 @@ public class UserController {
 
     public static UserWithPhotos createUserWithPhotos(String login, String firstName, String lastName, String photoName, Image photo) throws IllegalArgumentException {
         UserWithPhotos user = createTransientUserWithPhotos(login, firstName, lastName, photoName, photo);
-        persistUser(user);
+        EntityManagerFactoryController.persist(user);
         return user;
     }
 
@@ -105,21 +103,7 @@ public class UserController {
         if (user == null) {
             throw new IllegalArgumentException();
         }
-        EntityManager em = EntityManagerFactoryControler.getLocalEntityManager();
-        try {
-            em.getTransaction().begin();
-
-            em.unwrap(Session.class).saveOrUpdate(user);
-            em.remove(user);
-
-            em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            em.close();
-        }
-        //TODO: check and log exceptions
+        EntityManagerFactoryController.delete(user);
     }
 
     public static void setDetachedName(User user, String firstName, String lastName) {
@@ -134,7 +118,7 @@ public class UserController {
 
     public static void setName(User user, String firstName, String lastName) {
         setDetachedName(user, firstName, lastName);
-        updateUser(user);
+        EntityManagerFactoryController.update(user);
     }
 
     public static void setDetachedPriority(User user, int priority) {
@@ -146,7 +130,7 @@ public class UserController {
 
     public static void setPriority(User user, int priority) {
         setDetachedPriority(user, priority);
-        updateUser(user);
+        EntityManagerFactoryController.update(user);
     }
 
     public static void setDetachedDevice(User user, Device device) {
@@ -187,7 +171,7 @@ public class UserController {
 
     public static void setPassword(SecuredUser user, String password) {
         setDetachedPassword(user, password);
-        updateUser(user);
+        EntityManagerFactoryController.update(user);
     }
 
     public static void addDetachedEmail(UserWithEmail user, String email) throws IllegalArgumentException {
@@ -202,7 +186,7 @@ public class UserController {
 
     public static void addEmail(UserWithEmail user, String email) throws IllegalArgumentException {
         addDetachedEmail(user, email);
-        updateUser(user);
+        EntityManagerFactoryController.update(user);
     }
 
     public static void removeDetachedEmail(UserWithEmail user, String email) {
@@ -215,7 +199,7 @@ public class UserController {
 
     public static void removeEmail(UserWithEmail user, String email) {
         removeDetachedEmail(user, email);
-        updateUser(user);
+        EntityManagerFactoryController.update(user);
     }
 
     public static void addDetachedPhoto(UserWithPhotos user, String photoName, Image photo) {
@@ -230,7 +214,7 @@ public class UserController {
 
     public static void addPhoto(UserWithPhotos user, String photoName, Image photo) {
         addDetachedPhoto(user, photoName, photo);
-        updateUser(user);
+        EntityManagerFactoryController.update(user);
     }
 
     public static void removeDetachedPhoto(UserWithPhotos user, String photoName) {
@@ -243,45 +227,11 @@ public class UserController {
 
     public static void removePhoto(UserWithPhotos user, String photoName) {
         removeDetachedPhoto(user, photoName);
-        updateUser(user);
+        EntityManagerFactoryController.update(user);
     }
 
     public static void batchUpdateUsers(List<User> detachedUsers) {
         //TODO: implement batch update
-    }
-
-    private static void persistUser(User user) {
-        EntityManager em = EntityManagerFactoryControler.getLocalEntityManager();
-        try {
-            em.getTransaction().begin();
-
-            em.persist(user);
-
-            em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            em.close();
-        }
-        //TODO: check and log exceptions
-    }
-
-    private static void updateUser(User user) {
-        EntityManager em = EntityManagerFactoryControler.getLocalEntityManager();
-        try {
-            em.getTransaction().begin();
-
-            em.merge(user);
-
-            em.getTransaction().commit();
-        } finally {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            em.close();
-        }
-        //TODO: check and log exceptions
     }
 
     private static Credentials createCredentials(String login, String firstName, String lastName) throws IllegalArgumentException {

@@ -3,7 +3,7 @@ package user;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-import util.EntityManagerFactoryControler;
+import util.EntityManagerFactoryController;
 
 import javax.persistence.EntityManager;
 
@@ -298,7 +298,7 @@ public class UserControllerTest {
     }
 
     private User findUser(Long id) {
-        EntityManager em = EntityManagerFactoryControler.getLocalEntityManager();
+        EntityManager em = EntityManagerFactoryController.getLocalEntityManager();
         try {
             User user = em.find(User.class, id);
             if (user == null) {
@@ -321,7 +321,7 @@ public class UserControllerTest {
     }
 
     private List<User> queryUsers() {
-        EntityManager em = EntityManagerFactoryControler.getLocalEntityManager();
+        EntityManager em = EntityManagerFactoryController.getLocalEntityManager();
         try {
             List<User> users = em.createQuery("from User", User.class).getResultList();
             for (User user : users) {
