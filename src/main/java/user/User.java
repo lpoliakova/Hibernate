@@ -57,15 +57,14 @@ public class User {
     }
 
     public Set<UserInGroup> getGroups() {
-        return groups;
-//        return Collections.unmodifiableSet(groups);
+        return Collections.unmodifiableSet(groups);
     }
 
     public void addGroup(UserInGroup group) {
         groups.add(group);
     }
 
-    void removeGroup(UserInGroup group) { //TODO: remove public
+    void removeGroup(UserInGroup group) {
         groups.remove(group);
     }
 

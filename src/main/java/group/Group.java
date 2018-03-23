@@ -1,8 +1,11 @@
 package group;
 
+import user.User;
+
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -30,12 +33,12 @@ public class Group {
     protected Group() {
     }
 
-    public Group(String name) {
+    public Group(String name) { //TODO: fix visibility
         this.name = name;
         this.scope = GroupScope.PRIVATE;
     }
 
-    public Group(String name, GroupScope scope) {
+    Group(String name, GroupScope scope) {
         this.name = name;
         this.scope = scope;
     }
@@ -48,7 +51,7 @@ public class Group {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -56,15 +59,20 @@ public class Group {
         return Collections.unmodifiableSet(users);
     }
 
-    public void addUserToGroup(UserInGroup user) {
+    void addUser(UserInGroup user) {
         if (scope == GroupScope.PRIVATE && users.size() >= 2) {
             throw new IllegalArgumentException();
         }
         users.add(user);
     }
 
-    public void removeUser(UserInGroup user) {
+    void removeUser(UserInGroup user) {
         users.remove(user);
+    }
+
+    public UserInGroup getUserInGroupByUser(User user) {
+        Optional<UserInGroup> userInGroup = users.stream().filter(u -> u.getUser() == user).findFirst();
+        return userInGroup.orElse(null);
     }
 
     public GroupScope getScope() {

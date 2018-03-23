@@ -13,7 +13,7 @@ public class UserInGroupId implements Serializable{
     @Column(name = "fk_users")
     private Long userId;
 
-    public UserInGroupId(){}
+    UserInGroupId(){}
 
     public UserInGroupId(Long groupId, Long userId) {
         this.groupId = groupId;

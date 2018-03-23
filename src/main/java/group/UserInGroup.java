@@ -54,13 +54,14 @@ public class UserInGroup {
 
     }
 
-    public UserInGroup(Group group, User user) {
+    public UserInGroup(Group group, User user) { //TODO: fix visibility
         this.group = group;
         this.user = user;
         this.id = new UserInGroupId(group.getId(), user.getId());
+        this.muted = false;
     }
 
-    public UserInGroup(Group group, User user, Boolean muted) {
+    UserInGroup(Group group, User user, Boolean muted) {
         this(group, user);
         this.muted = muted;
     }
@@ -91,8 +92,7 @@ public class UserInGroup {
         return message;
     }
 
-
-    public void setMuted(Boolean muted) {
+    void setMuted(Boolean muted) {
         this.muted = muted;
     }
 
